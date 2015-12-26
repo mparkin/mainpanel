@@ -1,28 +1,58 @@
+#! /usr/bin/python
+
 import kivy
 kivy.require('1.9.0')
-
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.settings import SettingsWithSidebar
 
-class LoginScreen(GridLayout):
-	
-	def __int__(self, **kwargs):
-		super(LoginScreen, self).__init__(**kwargs)
-		self.cols = 2
-		self.add_widget(Label(text='User Name'))
-		self.username = TextInput(multiline=False)
-		self.add_widget(self.username)
-		self.add_widget(Label(text='password'))
-		self.password = TextInput(password=True, multiline = False)
-		self.add_widget(self.password)
+from settingsjson import settings_json
 
-class MyApp(App):	
-	def build(self):
-		return LoginScreen()
+import datetime
+import serial
+import telnetlib as Tnet
 
+Builder.load_string('''
+<Interface>:
+    orientation: 'vertical'
+    Button:
+        test: 'open the settings!'
+        font_size: 50
+        on_release: app.open_settings()
+''')
 
+class Interface(BoxLayout):
+    pass
 
+class sensorClass(object):
+	pass
+
+class pumpClass(object):
+	pass
+
+class Mainpanelapp(App):	
+    def build(self):
+        self.settings_cls = SettingsWithSidebar
+        self.use_kivy_settings = False
+        setting = self.config.get('example', 'boolexample')
+        return Interface()
+
+    def build_config(self,config):
+	config.setdefaults('example', {
+	    'boolexample': True,
+	    'numericexample' : 10,
+	    'optionsexample' : 'option2',
+            'stringexample'  : 'some_string',
+	    'pathexample'    : '/some/path' })
+
+    def build_settings(self,settings):
+        settings.add_json_panel('Pump System Settings',
+				self.config,
+                                data=settings_json)
+
+    def on_config_change(self, config, section, key, value):
+        print config, section, key, value 
+ 
 if __name__ == '__main__':
-	MyApp().run()
+	Mainpanelapp().run()

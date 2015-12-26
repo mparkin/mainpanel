@@ -18,5 +18,9 @@ The pump connection is through a socket connection to the controlling
 
 1. Check for connection to pump. If not there send message and die
 2. Add pump commands to this document.  
+3. Add action scheduler
+4. Add configuration window
+5. Add action button frame
+
 
 
