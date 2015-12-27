@@ -7,6 +7,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 
 from settingsjson import settings_json
 
@@ -28,27 +29,27 @@ Builder.load_string('''
             text: 'Pump Controls'
         Button:
             text: 'Initialize'
-            on_release: ppump.init()
+            on_release: root.initButton()
         Button:
             text: 'Flow Rate'
-#            on_release: app.open_settings()
+            on_release: root.flowButton()
         Button:
             text: 'Direction'
-#            on_release: app.open_settings()
+            on_release: root.directionButton()
         Button:
             text: 'Run' 
-#            on_release: app.open_settings()
+            on_release: root.runButton()
         Button:
             text: 'Stop' 
-#            on_release: app.open_settings()
+            on_release: root.stopButton()
         Button:
             text: 'Mode' 
-#            on_release: app.open_settings()
+            on_release: root.modeButton()
         Button:
             text: 'Sequence Editor' 
-#            on_release: app.open_settings()
+            on_release: root.editButton()
         Button:
-            text: 'Settings!'
+            text: 'Settings'
             on_release: app.open_settings()
     Label:
         text: 'Space Holder!!!!'
@@ -63,7 +64,14 @@ Builder.load_string('''
 ''')
 
 class Interface(BoxLayout):
-    pass
+    def initButton(self):
+	ppump.init()
+    def flowButton(self):
+	ppump.flow()
+    def runButton(self):
+	ppump.run()
+    def stopButton(self):
+	ppump.stop()
 
 class Mainpanelapp(App):
     def build(self):
