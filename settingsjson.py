@@ -2,27 +2,32 @@ import json
 
 settings_json = json.dumps([
 #	{'type': 'title',
-#	 'title': 'Pump System Settings'},
+#	 'title': 'Pump System Settings v0.5A'},
+
         {'type' : 'bool',
          'title': 'A boolean setting',
          'desc' : 'Boolean description text',
          'section' : 'operation',
          'key' : 'boolexample'},
-        {'type': 'numeric',
-         'title' : 'A numeric setting',
+
+        {'type': 'string',
+         'title' : 'Flow Rate',
          'section' : 'operation',
-         'key'   : 'numericexample'},
+         'key'   : 'flowRate'},
+
         {'type' : 'options',
-         'title': 'An options Setting',
-         'desc' : 'Options description text',
+         'title': 'Mode',
+         'desc' : 'Operational Mode of Pump',
          'section' : 'operation',
-         'key'  : 'optionsexample',
-         'options' : ['option1', 'option2', 'option3']},
+         'key'  : 'Mode',
+         'options' : ['Run', 'Timed', 'Sequenced']},
+
         {'type'  : 'string',
-         'title' : 'A string setting',
-         'desc'  : 'String description text',
+         'title' : 'Pump Address',
+         'desc'  : 'IP Address of Pump',
          'section': 'operation',
-         'key'   : 'stringexample'},
+         'key'   : 'PumpAddress'},
+
         {'type' : 'path',
          'title': 'A path setting',
          'desc' : 'Path description text',

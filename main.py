@@ -8,6 +8,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.settings import SettingsWithSidebar
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.properties import NumericProperty
+from kivy.properties import BoundedNumericProperty
+from kivy.properties import StringProperty
 
 from settingsjson import settings_json
 
@@ -17,6 +20,7 @@ import pump
 
 ppump = pump.pumpControl()	
 
+
 Builder.load_string('''
 <Interface>:
     orientation: 'horizontal'
@@ -24,12 +28,12 @@ Builder.load_string('''
     BoxLayout: 
         orientation: 'vertical'
         Label: 
-            text: 'Pump Controls'
+            text: 'Pump Controls v0.5A'
         Button:
             text: 'Initialize'
             on_release: root.initButton(self)
         Button: 
-            text: root.flowrate
+            text: str(root.flowrate)
             on_release: root.flowButton(self)
         Button:
             text: 'Dispense'
@@ -47,7 +51,7 @@ Builder.load_string('''
             text: 'Normal' 
             on_release: root.pulseButton(self)
         Button:
-            text: 'FreeRun' 
+            text: 'Run' 
             on_release: root.modeButton(self)
         Button:
             text: 'Sequence Editor' 
@@ -71,42 +75,77 @@ Builder.load_string('''
 ''')
 
 class Interface(BoxLayout):
-    flowrate = "15 ml/min"
+    flowrate = BoundedNumericProperty( 0,min = 0, max = 250 )
+    direction = "Dispense"
+    mode = StringProperty("")
+    flobutid = 0
+    settings_cls = SettingsWithSidebar
+    use_kivy_settings = False
+    
     def initButton(self,id):
         id.background_color = [ 0, 1, 1, 1]
 	ppump.init()
+
     def directionButton(self,id):
-        id.background_color = [ 1, 1, 0, 1]
-	ppump.direction()
+        if id.text == "Dispense":
+            ppump.direction('A')
+            id.text = "Withdraw"
+            id.background_color = [ 1, 1, 0, 1]
+        else :
+	    id.text = "Dispense"
+	    ppump.direction('C')
+            id.background_color = [ 0, 1, 1, 1]
+
+    def brakeButton(self,id):
+        if id.text == "Brake Off":
+            ppump.brake('B')
+            id.text = "Brake On"
+            id.background_color = [ 1, 1, 0, 1]
+        else :
+	    id.text = "Brake Off"
+	    ppump.brake('U')
+            id.background_color = [ 0, 1, 1, 1]
+
     def flowButton(self,id):
-        id.text = "30 ml/min"
+        id.text = str(self.flowrate) 
         id.background_color = [ 1, 1, 1, 1]
-	ppump.speed()
+        self.flobutid = id    
+	ppump.speed(str(self.flowrate * 24.06))
+
     def runButton(self,id):
         id.background_color = [ 0, 1, 0, 1]
 	ppump.start()
+
     def stopButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
 	ppump.stop()
+
     def pulseButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
 	ppump.stop()
 
+    def on_flowrate(self, instance, value):
+	ppump.speed(str(value * 24.06))
+
 class Mainpanelapp(App):
+
+    intface = Interface()
+    
     def build(self):
         self.settings_cls = SettingsWithSidebar
         self.use_kivy_settings = False
-        setting = self.config.get('operation', 'boolexample')
-        ppump.ComInit("192.168.0.116")
+        ppump.ComInit(self.config.get('operation','PumpAddress'))
         ppump.init()
-        return Interface()
+        self.intface.flowrate = float(self.config.get('operation','flowRate'))
+        self.intface.mode = self.config.get('operation','mode')
+        return self.intface
 
     def build_config(self,config):
 	config.setdefaults('operation', {
 	    'boolexample': True,
-	    'numericexample' : 10,
-	    'optionsexample' : 'option2',
-            'stringexample'  : 'some_string',
+	    'flowRate' : '15.0',
+	    'Mode' : 'Run',
+            'PumpAddress'  : '192.168.0.116',
 	    'pathexample'    : '/some/path' })
 
     def build_settings(self,settings):
@@ -116,7 +155,9 @@ class Mainpanelapp(App):
 
     def on_config_change(self, config, section, key, value):
         print config, section, key, value 
- 
+        if key == 'flowRate' :
+		self.intface.flowrate = float(value)
+
 if __name__ == '__main__':
 	Mainpanelapp().run()
         ppump.quit()
