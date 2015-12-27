@@ -13,14 +13,12 @@ from settingsjson import settings_json
 
 import datetime
 import serial
-#import telnetlib as Tnet
 import pump  
 
 ppump = pump.pumpControl()	
 
 Builder.load_string('''
 <Interface>:
-    id: MainWindow
     orientation: 'horizontal'
     size: root.size
     BoxLayout: 
@@ -29,25 +27,34 @@ Builder.load_string('''
             text: 'Pump Controls'
         Button:
             text: 'Initialize'
-            on_release: root.initButton()
+            on_release: root.initButton(self)
+        Button: 
+            text: root.flowrate
+            on_release: root.flowButton(self)
         Button:
-            text: 'Flow Rate'
-            on_release: root.flowButton()
+            text: 'Dispense'
+            on_release: root.directionButton(self)
         Button:
-            text: 'Direction'
-            on_release: root.directionButton()
+            text: 'Stopped' 
+            on_release: root.runButton(self)
         Button:
-            text: 'Run' 
-            on_release: root.runButton()
+            text: 'Interval' 
+            on_release: root.stopButton(self)
         Button:
-            text: 'Stop' 
-            on_release: root.stopButton()
+            text: 'Brake Off' 
+            on_release: root.brakeButton(self)
         Button:
-            text: 'Mode' 
-            on_release: root.modeButton()
+            text: 'Normal' 
+            on_release: root.pulseButton(self)
+        Button:
+            text: 'FreeRun' 
+            on_release: root.modeButton(self)
         Button:
             text: 'Sequence Editor' 
-            on_release: root.editButton()
+            on_release: root.editButton(self)
+        Button:
+            text: 'Sensor Recording' 
+            on_release: root.editButton(self)
         Button:
             text: 'Settings'
             on_release: app.open_settings()
@@ -64,13 +71,25 @@ Builder.load_string('''
 ''')
 
 class Interface(BoxLayout):
-    def initButton(self):
+    flowrate = "15 ml/min"
+    def initButton(self,id):
+        id.background_color = [ 0, 1, 1, 1]
 	ppump.init()
-    def flowButton(self):
-	ppump.flow()
-    def runButton(self):
-	ppump.run()
-    def stopButton(self):
+    def directionButton(self,id):
+        id.background_color = [ 1, 1, 0, 1]
+	ppump.direction()
+    def flowButton(self,id):
+        id.text = "30 ml/min"
+        id.background_color = [ 1, 1, 1, 1]
+	ppump.speed()
+    def runButton(self,id):
+        id.background_color = [ 0, 1, 0, 1]
+	ppump.start()
+    def stopButton(self,id):
+        id.background_color = [ 1, 0, 0, 1]
+	ppump.stop()
+    def pulseButton(self,id):
+        id.background_color = [ 1, 0, 0, 1]
 	ppump.stop()
 
 class Mainpanelapp(App):

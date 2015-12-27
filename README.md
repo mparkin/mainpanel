@@ -14,10 +14,29 @@ The message from the sensor arduino is in this format:
 The pump connection is through a socket connection to the controlling
 "Photon" board and a simple single character command set. 
 
+Command Set
+
+A - anticlockwise 
+B - brake moter
+C - clockwise
+D - duration
+E - stop
+G - Go
+I - Init
+L - counted rotation run
+N - Normal run ( unpulse )
+S - Set speed ( 0-4095 , S1234 )
+T - Timed Run
+U - Unbrake motor
+W - number of rotations
+X - return status
+Z - End communications session
+
+
 ## TO DO
 
-1. Check for connection to pump. If not there send message and die
-2. Add pump commands to this document.  
+~~1. Check for connection to pump. If not there send message and die~~
+~~2. Add pump commands to this document.~~  
 3. Add action scheduler
 4. Add configuration window
 5. Add action button frame
