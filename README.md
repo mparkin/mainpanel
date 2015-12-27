@@ -21,6 +21,5 @@ The pump connection is through a socket connection to the controlling
 3. Add action scheduler
 4. Add configuration window
 5. Add action button frame
-
-
-
+6. Break out pump commands to own class ( pump.py )
+7. Break out sensor commands to own class (sensors.py)

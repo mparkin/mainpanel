@@ -12,7 +12,10 @@ from settingsjson import settings_json
 
 import datetime
 import serial
-import telnetlib as Tnet
+#import telnetlib as Tnet
+import pump  
+
+ppump = pump.pumpControl()	
 
 Builder.load_string('''
 <Interface>:
@@ -25,7 +28,7 @@ Builder.load_string('''
             text: 'Pump Controls'
         Button:
             text: 'Initialize'
-#            on_release: app.open_settings()
+            on_release: ppump.init()
         Button:
             text: 'Flow Rate'
 #            on_release: app.open_settings()
@@ -62,11 +65,13 @@ Builder.load_string('''
 class Interface(BoxLayout):
     pass
 
-class Mainpanelapp(App):	
+class Mainpanelapp(App):
     def build(self):
         self.settings_cls = SettingsWithSidebar
         self.use_kivy_settings = False
         setting = self.config.get('operation', 'boolexample')
+        ppump.ComInit("192.168.0.116")
+        ppump.init()
         return Interface()
 
     def build_config(self,config):
@@ -87,3 +92,4 @@ class Mainpanelapp(App):
  
 if __name__ == '__main__':
 	Mainpanelapp().run()
+        ppump.quit()

@@ -5,27 +5,35 @@ import telnetlib as Tnet
 
 Hostaddress = "192.168.0.116"
 
-class pumpControl(object):
+class pumpControl():
 
-    tn = Tnet.Telnet(Hostaddress);
+    Hostaddress = "192.168.0.116"
+    tn=Tnet.Telnet(); 
+    print "pc init"   
+    def ComInit(self,address):
+        self.Hostaddress = address
+	print self.Hostaddress
+        self.tn.open(self.Hostaddress)
 
-    def init():
-	tn.write("I\n")
-    def speed():
-	tn.write("S2000\n")
-    def direction():
-	tn.write("C\n")
-    def stop():
-	tn.write("S\n")
-    def start():
-	tn.write("B\n")
-    def quit():
-	tn.write("Z\n")
+    def init(self):
+	self.tn.write("I\n")
+    def speed(self):
+	self.tn.write("S2000\n")
+    def direction(self):
+	self.tn.write("C\n")
+    def stop(self):
+	self.tn.write("S\n")
+    def start(self):
+	self.tn.write("B\n")
+    def quit(self):
+	self.tn.write("Z\n")
 
 
 def runit():
     p = pumpControl()
+    p.ComInit("192.168.0.116")
     p.init()
+    p.quit()
 
 
 if __name__ == '__main__':
