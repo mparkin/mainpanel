@@ -16,21 +16,21 @@ The pump connection is through a socket connection to the controlling
 
 Command Set
 
-+A - anticlockwise 
-+B - brake moter
-+C - clockwise
-+D - duration
-+E - stop
-+G - Go
-+I - Init
-+L - counted rotation run
-+N - Normal run ( unpulse )
-+S - Set speed ( 0-4095 , S1234 )
-+T - Timed Run
-+U - Unbrake motor
-+W - number of rotations
-+X - return status
-+Z - End communications session
+* A - anticlockwise 
+* B - brake moter
+* C - clockwise
+* D - duration
+* E - stop
+* G - Go
+* I - Init
+* L - counted rotation run
+* N - Normal run ( unpulse )
+* S - Set speed ( 0-4095 , S1234 )
+* T - Timed Run
+* U - Unbrake motor
+* W - number of rotations
+* X - return status
+* Z - End communications session
 
 
 ## TO DO
