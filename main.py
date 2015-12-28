@@ -175,8 +175,8 @@ class Mainpanelapp(App):
             'turns': '24',
 	    'Mode' : 'Run',
             'PumpAddress'  : '192.168.0.116',
-	    'dataDirectory'    : './'' })
-	    'datafile'    : 'sensordata'' })
+	    'dataDirectory'    : './' ,
+	    'datafile'    : 'sensordata' })
 
     def build_settings(self,settings):
         settings.add_json_panel('Pump System Settings',

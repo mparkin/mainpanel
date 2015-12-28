@@ -47,7 +47,7 @@ settings_json = json.dumps([
          'title' : 'Data File name',
          'desc'  : 'Root data file name',
          'section': 'operation',
-         'key'   : 'datafile''},
+         'key'   : 'datafile'},
 
         {'type' : 'path',
          'title': 'A path setting',
