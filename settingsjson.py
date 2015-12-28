@@ -43,9 +43,15 @@ settings_json = json.dumps([
          'section': 'operation',
          'key'   : 'PumpAddress'},
 
+        {'type'  : 'string',
+         'title' : 'Data File name',
+         'desc'  : 'Root data file name',
+         'section': 'operation',
+         'key'   : 'datafile''},
+
         {'type' : 'path',
          'title': 'A path setting',
          'desc' : 'Path description text',
          'section' : 'operation',
-         'key' : 'pathexample'}])
+         'key' : 'dataDirectory'}])
 

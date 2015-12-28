@@ -17,6 +17,7 @@ from settingsjson import settings_json
 import datetime
 import serial
 import pump  
+import senscollect
 
 ppump = pump.pumpControl()	
 
@@ -174,7 +175,8 @@ class Mainpanelapp(App):
             'turns': '24',
 	    'Mode' : 'Run',
             'PumpAddress'  : '192.168.0.116',
-	    'pathexample'    : '/some/path' })
+	    'dataDirectory'    : './'' })
+	    'datafile'    : 'sensordata'' })
 
     def build_settings(self,settings):
         settings.add_json_panel('Pump System Settings',

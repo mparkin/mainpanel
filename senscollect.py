@@ -2,24 +2,33 @@
 
 import datetime
 import serial
-import telnetlib as Tnet
 
-Hostaddress = "192.168.0.116"
+class SensorRead():
+    data = " "
+    filename = " "
+    ser = 0
 
-ser = serial.Serial('/dev/ttyACM0',38400)
-filename = "data_{0}".format(datetime.datetime.now().strftime('%d%m%y_%H%M%S'))
-f = open(filename, "w");
-tn = Tnet.Telnet(Hostaddress)
-tn.write("I\n")
-print tn.read_lazy()
-tn.write("B\n")
-print tn.read_lazy()
+    def open(self,filename):
+        ser = serial.Serial('/dev/ttyACM0',38400)
+        filename = "{0}_{1}".format(filename,datetime.datetime.now().strftime('%d%m%y_%H%M%S'))
 
-while 1:
-	data = ser.readline()
+    def getData(self):
+	data = self.ser.readline()
+
+    def writeData(self):
+        f = open(self.filename, "w");
         print data
 	print datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 	f.write("{0},{1}\r\n".format(datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'),data))
-f.close()
-tn.write("Z\n")
-tn.close()
+        f.close()
+
+    def close():
+	self.file.close()
+        self.ser.close()
+
+
+if __name__ == '__main__':
+	tst = SensorRead()
+	tst.open("test")
+	tst.close()
+	
