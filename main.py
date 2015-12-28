@@ -43,7 +43,7 @@ Builder.load_string('''
             on_release: root.runButton(self)
         Button:
             text: 'Interval' 
-            on_release: root.stopButton(self)
+            on_release: root.intervalButton(self)
         Button:
             text: 'Brake Off' 
             on_release: root.brakeButton(self)
@@ -51,14 +51,14 @@ Builder.load_string('''
             text: 'Normal' 
             on_release: root.pulseButton(self)
         Button:
-            text: 'Run' 
+            text: 'Free Run' 
             on_release: root.modeButton(self)
         Button:
             text: 'Sequence Editor' 
             on_release: root.editButton(self)
         Button:
             text: 'Sensor Recording' 
-            on_release: root.editButton(self)
+            on_release: root.sensorButton(self)
         Button:
             text: 'Settings'
             on_release: app.open_settings()
@@ -75,7 +75,10 @@ Builder.load_string('''
 ''')
 
 class Interface(BoxLayout):
-    flowrate = BoundedNumericProperty( 0,min = 0, max = 250 )
+    flowrate = BoundedNumericProperty( 0,min = 0, max = 171 )
+    calnumber = BoundedNumericProperty( 24.06,min = 0, max = 100 )
+    interval = NumericProperty( 100 )
+    turns = NumericProperty( 24 )
     direction = "Dispense"
     mode = StringProperty("")
     flobutid = 0
@@ -116,16 +119,37 @@ class Interface(BoxLayout):
         id.background_color = [ 0, 1, 0, 1]
 	ppump.start()
 
-    def stopButton(self,id):
+    def modeButton(self,id):
+        id.background_color = [ 0, 1, 0, 1]
+	ppump.start()
+
+    def editButton(self,id):
+        id.background_color = [ 0, 1, 0, 1]
+	ppump.start()
+
+    def sensorButton(self,id):
+        id.background_color = [ 0, 1, 0, 1]
+	ppump.start()
+
+    def intervalButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
-	ppump.stop()
+	ppump.interval(str(self.interval))
 
     def pulseButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
 	ppump.stop()
 
     def on_flowrate(self, instance, value):
-	ppump.speed(str(value * 24.06))
+	ppump.speed(str(value * self.calnumber))
+
+    def on_calnumber(self, instance, value):
+	ppump.speed(str(value * self.flowrate))
+
+    def on_interval(self, instance, value):
+	ppump.interval(str(value))
+
+    def on_calnumber(self, instance, value):
+	ppump.turns(str(value ))
 
 class Mainpanelapp(App):
 
@@ -137,6 +161,7 @@ class Mainpanelapp(App):
         ppump.ComInit(self.config.get('operation','PumpAddress'))
         ppump.init()
         self.intface.flowrate = float(self.config.get('operation','flowRate'))
+        self.intface.calnumber = float(self.config.get('operation','calnumber'))
         self.intface.mode = self.config.get('operation','mode')
         return self.intface
 
@@ -144,6 +169,9 @@ class Mainpanelapp(App):
 	config.setdefaults('operation', {
 	    'boolexample': True,
 	    'flowRate' : '15.0',
+            'calnumber': '24.06',
+            'interval': '24',
+            'turns': '24',
 	    'Mode' : 'Run',
             'PumpAddress'  : '192.168.0.116',
 	    'pathexample'    : '/some/path' })
@@ -157,6 +185,12 @@ class Mainpanelapp(App):
         print config, section, key, value 
         if key == 'flowRate' :
 		self.intface.flowrate = float(value)
+        elif key == 'calnumber' :
+		self.intface.calnumber = float(value)
+        elif key == 'interval' :
+		self.intface.interval = int(value)
+        elif key == 'turns' :
+		self.intface.turns = float(value)
 
 if __name__ == '__main__':
 	Mainpanelapp().run()

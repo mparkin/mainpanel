@@ -15,6 +15,21 @@ settings_json = json.dumps([
          'section' : 'operation',
          'key'   : 'flowRate'},
 
+        {'type': 'string',
+         'title' : 'Calibration factor',
+         'section' : 'operation',
+         'key'   : 'calnumber'},
+
+        {'type': 'string',
+         'title' : 'Timed Run in milliseconds ',
+         'section' : 'operation',
+         'key'   : 'interval'},
+
+        {'type': 'string',
+         'title' : 'Number of Turns',
+         'section' : 'operation',
+         'key'   : 'turns'},
+
         {'type' : 'options',
          'title': 'Mode',
          'desc' : 'Operational Mode of Pump',

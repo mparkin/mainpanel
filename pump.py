@@ -24,6 +24,16 @@ class pumpControl():
         print '\n'.join(strings)
 	self.tn.write('\n'.join(strings))
 
+    def interval(self,interval):
+	strings = ["D",interval]
+        print '\n'.join(strings)
+	self.tn.write('\n'.join(strings))
+
+    def turna(self,turns):
+	strings = ["L",turns]
+        print '\n'.join(strings)
+	self.tn.write('\n'.join(strings))
+
     def direction(self,dir):
  	if dir == 'C':
 	    self.tn.write("C\n")
