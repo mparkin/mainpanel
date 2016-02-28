@@ -21,10 +21,14 @@ Command Set
 * C - clockwise
 * D - duration
 * E - stop
+* F - Hi speed Setting
 * G - Go
+* H - go to and stop a home position
 * I - Init
 * L - counted rotation run
 * N - Normal run ( unpulse )
+* P - Run at hardware set fast rate
+* R - Fast run area by motor pulses
 * S - Set speed ( 0-4095 , S1234 )
 * T - Timed Run
 * U - Unbrake motor
