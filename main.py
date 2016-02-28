@@ -174,7 +174,7 @@ class Mainpanelapp(App):
             'interval': '24',
             'turns': '24',
 	    'Mode' : 'Run',
-            'PumpAddress'  : '192.168.0.116',
+            'PumpAddress'  : '192.168.0.110',
 	    'dataDirectory'    : './' ,
 	    'datafile'    : 'sensordata' })
 
