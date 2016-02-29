@@ -24,29 +24,42 @@ class pumpControl():
         self.readit()
 
     def speed(self,speed):
-	strings = ["S",speed]
-        #print '\n'.join(strings)
-	self.tn.write('\n'.join(strings))
-        self.readit()
+	self.write_data("S",speed)
 
-    def interval(self,interval):
-	strings = ["D",interval]
-        #print '\n'.join(strings)
-	self.tn.write('\n'.join(strings))
-        self.readit()
+    def fast(self,speed):
+	self.write_data("F",speed)
 
-    def turna(self,turns):
-	strings = ["L",turns]
-        print '\n'.join(strings)
-	self.tn.write('\n'.join(strings))
-        self.readit()
+    def radian(self,count):
+	self.write_data("R",count)
 
+    def winding(self,count):
+	self.write_data("W",count)
+
+    def duration(self,count):
+	self.write_data("D",count)
+
+    def turn(self,turns):
+	self.tn.write("L\n")
+
+    def timed(self,turns):
+	self.tn.write("T\n")
+
+    def home(self,turns):
+	self.tn.write("H\n")
 
     def direction(self,dir):
  	if dir == 'C':
 	    self.tn.write("C\n")
         else:
             self.tn.write("A\n")
+        self.readit()
+
+    def normal(self):
+	self.tn.write("N\n")
+        self.readit()
+
+    def pulse(self):
+	self.tn.write("P\n")
         self.readit()
 
     def brake(self,dir):
@@ -57,7 +70,7 @@ class pumpControl():
         self.readit()
 
     def stop(self):
-	self.tn.write("B\n")
+	self.tn.write("E\n")
         self.readit()
 
     def start(self):
@@ -77,6 +90,12 @@ class pumpControl():
 	self.data = self.tn.read_very_eager()
 	if self.debug:
             print(self.data)
+    
+    def write_data(self,command,data):
+	strings = [command,data]
+        #print '\n'.join(strings)
+	self.tn.write('\n'.join(strings))
+        self.readit()
 
 def runit():
     p = pumpControl()
