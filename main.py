@@ -64,7 +64,7 @@ Builder.load_string('''
             text: 'Settings'
             on_release: app.open_settings()
     Label:
-        text: 'Space Holder!!!!'
+        text: 'Space Holder!!!!!'
     Label:
         text: 'Space Holder1!!!!'
     Label:
@@ -114,11 +114,17 @@ class Interface(BoxLayout):
         id.text = str(self.flowrate) 
         id.background_color = [ 1, 1, 1, 1]
         self.flobutid = id    
-	ppump.speed(str(self.flowrate * 24.06))
+	ppump.speed(str(int(self.flowrate * 24.06)))
 
     def runButton(self,id):
-        id.background_color = [ 0, 1, 0, 1]
-	ppump.start()
+        if id.text == "Stopped":
+       	    ppump.start()
+            id.text = "Running"
+            id.background_color = [ 0, 1, 0, 1]
+        else :
+	    id.text = "Stopped"
+            ppump.brake('B')
+            id.background_color = [ 1, 0, 0, 1]
 
     def modeButton(self,id):
         id.background_color = [ 0, 1, 0, 1]
@@ -141,10 +147,10 @@ class Interface(BoxLayout):
 	ppump.stop()
 
     def on_flowrate(self, instance, value):
-	ppump.speed(str(value * self.calnumber))
+	ppump.speed(str(int(value * self.calnumber)))
 
     def on_calnumber(self, instance, value):
-	ppump.speed(str(value * self.flowrate))
+	ppump.speed(str(int(value * self.flowrate)))
 
     def on_interval(self, instance, value):
 	ppump.interval(str(value))

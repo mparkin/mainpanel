@@ -13,7 +13,7 @@ class pumpControl():
     print "pc init"  
     data = "" 
     debug = False
-
+    tn.set_debuglevel(5)
     def ComInit(self,address):
         self.Hostaddress = address
 	print self.Hostaddress
@@ -25,13 +25,13 @@ class pumpControl():
 
     def speed(self,speed):
 	strings = ["S",speed]
-        print '\n'.join(strings)
+        #print '\n'.join(strings)
 	self.tn.write('\n'.join(strings))
         self.readit()
 
     def interval(self,interval):
 	strings = ["D",interval]
-        print '\n'.join(strings)
+        #print '\n'.join(strings)
 	self.tn.write('\n'.join(strings))
         self.readit()
 
@@ -57,11 +57,11 @@ class pumpControl():
         self.readit()
 
     def stop(self):
-	self.tn.write("S\n")
+	self.tn.write("B\n")
         self.readit()
 
     def start(self):
-	self.tn.write("B\n")
+	self.tn.write("G\n")
         self.readit()
 
     def quit(self):
