@@ -13,7 +13,9 @@ class pumpControl():
     print "pc init"  
     data = "" 
     debug = False
-    tn.set_debuglevel(5)
+    if debug:
+        tn.set_debuglevel(5)
+
     def ComInit(self,address):
         self.Hostaddress = address
 	print self.Hostaddress
@@ -21,6 +23,9 @@ class pumpControl():
 
     def init(self):
 	self.tn.write("I\n")
+        self.tn.write_data("R",225)
+        self.tn.write_data("F",2900)
+        self.tn.write_data("S",207)
         self.readit()
 
     def speed(self,speed):
