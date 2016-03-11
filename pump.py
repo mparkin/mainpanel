@@ -23,9 +23,9 @@ class pumpControl():
 
     def init(self):
 	self.tn.write("I\n")
-        self.tn.write_data("R",225)
-        self.tn.write_data("F",2900)
-        self.tn.write_data("S",207)
+        self.write_data("R","225")
+        self.write_data("F","2900")
+        self.write_data("S","207")
         self.readit()
 
     def speed(self,speed):
