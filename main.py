@@ -18,6 +18,7 @@ import datetime
 import serial
 import pump  
 import senscollect
+import time
 
 ppump = pump.pumpControl()	
 
@@ -135,14 +136,22 @@ class Interface(BoxLayout):
        	    ppump.start()
             id.text = "Running"
             id.background_color = [ 0, 1, 0, 1]
+            if self.ids.modebutton.text == "Seq Run":
+                self.seqrun("./sequence.txt")
         else :
 	    id.text = "Stopped"
             ppump.brake('B')
             id.background_color = [ 1, 0, 0, 1]
 
     def modeButton(self,id):
-        id.background_color = [ 0, 1, 0, 1]
-	ppump.start()
+        if id.text == "Free Run":
+       	    ppump.start()
+            id.text = "Seq Run"
+            id.background_color = [ 0, 0, 1, 1]
+        else :
+	    id.text = "Free Run"
+            ppump.brake('B')
+            id.background_color = [ 0, 1, 0, 1]
 
     def editButton(self,id):
         id.background_color = [ 0, 1, 0, 1]
@@ -171,6 +180,43 @@ class Interface(BoxLayout):
 
     def on_calnumber(self, instance, value):
 	ppump.turns(str(value ))
+
+    def seqrun(self, filename):
+        f = open(filename,'r')
+        for line in f:
+            mode = False
+            cmd = line.split()
+            for idx , val in enumerate(cmd):
+                print idx, val
+                if idx == 0:
+		    command = val
+                if idx == 1:
+                    modifier = val
+                    mod = True
+                    print modifier
+            if command == "Run":
+	        ppump.start()
+                if mod:
+                    time.sleep(float(modifier)/1000)
+                mod = False
+            if command == "Wait":
+                if mod:
+                    time.sleep(float(modifier)/1000)
+                mod = False
+            if command == "Stop":
+                ppump.stop() 
+            if command == "Withdraw":
+	        ppump.direction('A')
+            if command == "Dispense":
+	        ppump.direction('C')
+            if command == "Pulse":
+	        ppump.start()
+                if mod:
+                    time.sleep(float(modifier)/1000)
+                mod = False
+            if command == "Flow":
+                ppump.stop() 
+        f.close()
 
 class Mainpanelapp(App):
 
