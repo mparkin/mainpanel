@@ -40,19 +40,15 @@ Command Set
 
 Action Schedulor Syntax
 
-<command>,<modifier>
+command,modifier
 
-* Run , <milliseconds>  - if time is 0 or null then run and go to next command
-* Wait, <milliseconds> - just sleep to the specified milliseconds
-* Flow, <mil/min>
-* Dispense, <null>
-* Withdraw, <null>
-* Pulse, <milliseconds> - Run at max speed for <milliseconds>
-* Stop, <null>
-
- 
-
-
+* Run , milliseconds  - if time is 0 or null then run and go to next command
+* Wait, milliseconds - just sleep to the specified milliseconds
+* Flow, ml/min
+* Dispense, null
+* Withdraw, null
+* Pulse, milliseconds - Run at max speed for milliseconds
+* Stop, null
 
 ## TO DO
 
