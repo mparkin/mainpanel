@@ -26,16 +26,21 @@ Command Set
 * H - go to and stop a home position
 * I - Init
 * J - Turn on cloud connection
-* k - Turn off cloud connection
+* K - Turn off cloud connection
 * L - counted rotation run
+* M - no function
 * N - Normal run ( unpulse )
+* O - no function
 * P - Run at hardware set fast rate
+* Q - no function
 * R - Fast run area by motor pulses
 * S - Set speed ( 0-4095 , S1234 )
 * T - Timed Run
 * U - Unbrake motor
+* V - no function
 * W - number of rotations
 * X - return status
+* Y - no function
 * Z - End communications session
 
 Action Schedulor Syntax
@@ -54,7 +59,7 @@ command,modifier
 
 1. ~~Check for connection to pump. If not there send message and die~~
 2. ~~Add pump commands to this document.~~  
-3. Add action scheduler
+3. ~~Add action scheduler~~
 4. Add configuration window
 5. Add action button frame
 6. ~~Break out pump commands to own class ( pump.py )~~
