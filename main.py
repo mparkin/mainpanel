@@ -32,36 +32,47 @@ Builder.load_string('''
             text: 'Pump Controls v0.5A'
         Button:
             text: 'Initialize'
+            id: Initbutton
             on_release: root.initButton(self)
         Button: 
             text: str(root.flowrate)
+            id: flowratebutton
             on_release: root.flowButton(self)
         Button:
             text: 'Dispense'
+            id: directionbutton
             on_release: root.directionButton(self)
         Button:
             text: 'Stopped' 
+            id: operationbutton
             on_release: root.runButton(self)
         Button:
             text: 'Interval' 
+            id: intvbutton
             on_release: root.intervalButton(self)
         Button:
-            text: 'Brake Off' 
+            text: 'Brake Off'
+            id: brakebutton 
             on_release: root.brakeButton(self)
         Button:
             text: 'Normal' 
+            id: methodbutton
             on_release: root.pulseButton(self)
         Button:
-            text: 'Free Run' 
+            text: 'Free Run'
+            id: modebutton 
             on_release: root.modeButton(self)
         Button:
-            text: 'Sequence Editor' 
+            text: 'Sequence Editor'
+            id: editorbutton 
             on_release: root.editButton(self)
         Button:
-            text: 'Sensor Recording' 
+            text: 'Sensor Recording'
+            id: SensorButton 
             on_release: root.sensorButton(self)
         Button:
             text: 'Settings'
+            id: settingsbutton
             on_release: app.open_settings()
     Label:
         text: 'Space Holder!!!!!'
@@ -89,6 +100,9 @@ class Interface(BoxLayout):
     def initButton(self,id):
         id.background_color = [ 0, 1, 1, 1]
 	ppump.init()
+	self.ids.operationbutton.text = "Stopped"
+        ppump.brake('B')
+        self.ids.operationbutton.background_color = [ 1, 0, 0, 1]
 
     def directionButton(self,id):
         if id.text == "Dispense":
@@ -140,7 +154,7 @@ class Interface(BoxLayout):
 
     def intervalButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
-	ppump.interval(str(self.interval))
+	ppump.duration(str(self.interval))
 
     def pulseButton(self,id):
         id.background_color = [ 1, 0, 0, 1]
@@ -153,7 +167,7 @@ class Interface(BoxLayout):
 	ppump.speed(str(int(value * self.flowrate)))
 
     def on_interval(self, instance, value):
-	ppump.interval(str(value))
+	ppump.duration(str(value))
 
     def on_calnumber(self, instance, value):
 	ppump.turns(str(value ))
