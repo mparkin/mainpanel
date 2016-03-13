@@ -47,20 +47,21 @@ Action Schedulor Syntax
 
 command,modifier
 
-* Run , milliseconds  - if time is 0 or null then run and go to next command
-* Wait, milliseconds - just sleep to the specified milliseconds
-* Flow, ml/min
-* Dispense, null
-* Withdraw, null
-* Pulse, milliseconds - Run at max speed for milliseconds
-* Stop, null
+* Run milliseconds  - if time is 0 or null then run and go to next command
+* Wait milliseconds - just sleep to the specified milliseconds
+* Flow ml/min
+* Dispense null
+* Withdraw null
+* Pulse milliseconds - Run at max speed for milliseconds
+* Normal milliseconds 
+* Stop null
 
 ## TO DO
 
 1. ~~Check for connection to pump. If not there send message and die~~
 2. ~~Add pump commands to this document.~~  
 3. ~~Add action scheduler~~
-4. Add configuration window
+4. ~~Add configuration window~~
 5. Add action button frame
 6. ~~Break out pump commands to own class ( pump.py )~~
 7. ~~Break out sensor commands to own class (sensors.py)~~
