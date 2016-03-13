@@ -78,9 +78,12 @@ class pumpControl():
 	self.tn.write("E\n")
         self.readit()
 
-    def start(self):
-	self.tn.write("G\n")
-        self.readit()
+    def start(self,filename):
+	if filename == "freerun":
+            self.tn.write("G\n")
+            self.readit()
+        else:
+            self.seqrun(filename);
 
     def quit(self):
 	self.tn.write("Z\n")
@@ -101,6 +104,40 @@ class pumpControl():
         #print '\n'.join(strings)
 	self.tn.write('\n'.join(strings))
         self.readit()
+
+    def seqrun(self,filename):
+	f = open(filename,'r')
+        for line in f:
+            mod = False
+            print idx,val
+            if idx == 0:
+                command = val
+            if idx == 1:
+                mod = True
+                modifier = val
+                print modifier
+        if command == "Run":
+            self.tn.write("G\n")
+            self.readit()
+            if mod:
+               time.sleep(float(modifier/1000))
+        if command == "Wait":
+            if mod:
+               time.sleep(float(modifier/1000))
+        if command == "Flow":
+	    self.speed(modifier)
+        if command == "Stop":
+            self.stop()
+        if command == "Withdraw":
+            self.direction('A')
+        if command == "Dispense":
+            self.direction('C')
+        if command == "Pulse":
+            self.pulse()
+            if mod:
+               time.sleep(float(modifier/1000))
+            mod = False
+        
 
 def runit():
     p = pumpControl()

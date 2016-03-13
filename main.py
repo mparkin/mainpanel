@@ -30,7 +30,7 @@ Builder.load_string('''
     BoxLayout: 
         orientation: 'vertical'
         Label: 
-            text: 'Pump Controls v0.5A'
+            text: 'Pump Controls v0.7B'
         Button:
             text: 'Initialize'
             id: Initbutton
