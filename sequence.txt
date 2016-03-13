@@ -1,2 +1,9 @@
-Run 10000
+Withdraw
+Run 30000
+Dispense
+Run 30000
+Flow 20.0
+Run 30000
+Pulse 30000
+Normal 30000
 Stop
