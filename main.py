@@ -133,11 +133,12 @@ class Interface(BoxLayout):
 
     def runButton(self,id):
         if id.text == "Stopped":
-       	    ppump.start()
             id.text = "Running"
             id.background_color = [ 0, 1, 0, 1]
             if self.ids.modebutton.text == "Seq Run":
-                self.seqrun("./sequence.txt")
+                ppump.start("./sequence.txt")
+            else :
+                ppump.start("freerun")
         else :
 	    id.text = "Stopped"
             ppump.brake('B')
@@ -145,12 +146,10 @@ class Interface(BoxLayout):
 
     def modeButton(self,id):
         if id.text == "Free Run":
-       	    ppump.start()
             id.text = "Seq Run"
             id.background_color = [ 0, 0, 1, 1]
         else :
 	    id.text = "Free Run"
-            ppump.brake('B')
             id.background_color = [ 0, 1, 0, 1]
 
     def editButton(self,id):
@@ -236,7 +235,7 @@ class Mainpanelapp(App):
 	config.setdefaults('operation', {
 	    'boolexample': True,
 	    'flowRate' : '15.0',
-            'calnumber': '24.06',
+            'calnumber': '13.8',
             'interval': '24',
             'turns': '24',
 	    'Mode' : 'Run',

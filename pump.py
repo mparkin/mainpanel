@@ -109,35 +109,42 @@ class pumpControl():
 	f = open(filename,'r')
         for line in f:
             mod = False
-            print idx,val
-            if idx == 0:
-                command = val
-            if idx == 1:
-                mod = True
-                modifier = val
-                print modifier
-        if command == "Run":
-            self.tn.write("G\n")
-            self.readit()
-            if mod:
-               time.sleep(float(modifier/1000))
-        if command == "Wait":
-            if mod:
-               time.sleep(float(modifier/1000))
-        if command == "Flow":
-	    self.speed(modifier)
-        if command == "Stop":
-            self.stop()
-        if command == "Withdraw":
-            self.direction('A')
-        if command == "Dispense":
-            self.direction('C')
-        if command == "Pulse":
-            self.pulse()
-            if mod:
-               time.sleep(float(modifier/1000))
-            mod = False
-        
+            cmd = line.split()
+	    for idx,val in enumerate(cmd):
+                print idx,val
+                if idx == 0:
+                    command = val
+                if idx == 1:
+                    mod = True
+                    modifier = val
+                    print modifier
+            if command == "Run":
+                self.tn.write("G\n")
+                self.readit()
+                if mod:
+                   time.sleep(float(modifier)/1000)
+            if command == "Wait":
+                if mod:
+                   time.sleep(float(modifier)/1000)
+            if command == "Flow":
+	        self.speed(modifier)
+            if command == "Stop":
+                self.stop()
+            if command == "Withdraw":
+                self.direction('A')
+            if command == "Dispense":
+                self.direction('C')
+            if command == "Pulse":
+                self.pulse()
+                if mod:
+                   time.sleep(float(modifier)/1000)
+                mod = False
+            if command == "Normal":
+                self.normal()
+                if mod:
+                   time.sleep(float(modifier)/1000)
+                mod = False
+        f.close()
 
 def runit():
     p = pumpControl()
