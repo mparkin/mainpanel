@@ -178,7 +178,7 @@ class Interface(BoxLayout):
 	ppump.duration(str(value))
 
     def on_calnumber(self, instance, value):
-	ppump.turns(str(value ))
+	ppump.turn(str(value ))
 
     def seqrun(self, filename):
         f = open(filename,'r')
