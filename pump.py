@@ -127,7 +127,7 @@ class pumpControl():
                 if mod:
                    time.sleep(float(modifier)/1000)
             if command == "Flow":
-	        self.speed(modifier)
+	        self.speed(str(int(float(modifier)*13.8)))
             if command == "Stop":
                 self.stop()
             if command == "Withdraw":
