@@ -34,7 +34,12 @@ class sequencer(object):
 		print self.commands
 		
 	def readfile(self,filename):
-		pass
+		txt = []
+		f = open(filename,'r')
+		for line in f:
+			txt += [line]
+		f.close()
+		return self.buildcommands(txt)
 		
 	def runcommands(self):
 		for command in self.commands:

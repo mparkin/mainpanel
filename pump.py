@@ -3,13 +3,14 @@
 import serial
 import telnetlib as Tnet
 import time
+import sequencer as seq
 
 Hostaddress = "192.168.0.110"
 
-class pumpControl():
-
+class pumpControl(object):
     Hostaddress = "192.168.0.110"
-    tn=Tnet.Telnet() 
+    s = seq.sequencer()	
+    tn = Tnet.Telnet()
     print "pc init"  
     data = "" 
     debug = False
@@ -106,11 +107,10 @@ class pumpControl():
         self.readit()
 
     def seqrun(self,filename):
-	f = open(filename,'r')
-        for line in f:
-            mod = False
+        runlist = s.readfile(filename)
+        for line in runlist:
             cmd = line.split()
-	    for idx,val in enumerate(cmd):
+            for idx,val in enumerate(cmd):
                 print idx,val
                 if idx == 0:
                     command = val
@@ -144,7 +144,7 @@ class pumpControl():
                 if mod:
                    time.sleep(float(modifier)/1000)
                 mod = False
-        f.close()
+
 
 def runit():
     p = pumpControl()
